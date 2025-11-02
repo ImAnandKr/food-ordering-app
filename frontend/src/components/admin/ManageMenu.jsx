@@ -1,7 +1,12 @@
+// frontend/src/components/admin/ManageMenu.jsx
+
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../LoadingSpinner';
+
+// 1. Import the CSS module
+import styles from './ManageMenu.module.css';
 
 const ManageMenu = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -9,12 +14,11 @@ const ManageMenu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  // State for the "Add New Item" form
   const [newItem, setNewItem] = useState({
     itemName: '',
     price: '',
     category: '',
-    image: '', // Using URL for simplicity
+    image: '',
   });
 
   // 1. Fetch all restaurants for the dropdown
@@ -23,7 +27,6 @@ const ManageMenu = () => {
       try {
         const { data } = await api.get('/restaurants');
         setRestaurants(data);
-        // Automatically select the first restaurant
         if (data.length > 0) {
           setSelectedRestaurantId(data[0]._id);
         }
@@ -37,14 +40,13 @@ const ManageMenu = () => {
   // 2. Fetch menu items whenever the selected restaurant changes
   useEffect(() => {
     if (!selectedRestaurantId) {
-      setMenuItems([]); // Clear menu if no restaurant is selected
+      setMenuItems([]);
       return;
     }
     
     const fetchMenu = async () => {
       try {
         setLoading(true);
-        // This is the public route to get a menu
         const { data } = await api.get(`/menu/${selectedRestaurantId}`);
         setMenuItems(data);
         setLoading(false);
@@ -54,9 +56,7 @@ const ManageMenu = () => {
       }
     };
     fetchMenu();
-  }, [selectedRestaurantId]); // Dependency array
-
-  // --- Event Handlers ---
+  }, [selectedRestaurantId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,16 +73,14 @@ const ManageMenu = () => {
     try {
       const itemData = {
         ...newItem,
-        restaurantId: selectedRestaurantId, // Attach the selected restaurant ID
-        price: parseFloat(newItem.price),  // Ensure price is a number
+        restaurantId: selectedRestaurantId,
+        price: parseFloat(newItem.price),
       };
       
-      const { data } = await api.post('/menu', itemData); // Admin token is auto-attached
+      const { data } = await api.post('/menu', itemData);
       
-      setMenuItems([data, ...menuItems]); // Add new item to the list
+      setMenuItems([data, ...menuItems]);
       toast.success('Menu item added successfully!');
-      
-      // Reset form
       setNewItem({ itemName: '', price: '', category: '', image: '' });
 
     } catch (err) {
@@ -91,19 +89,19 @@ const ManageMenu = () => {
   };
 
   return (
+    // 2. Use imported styles
     <div>
-      <h2 className="text-2xl font-bold mb-4">Manage Menu</h2>
+      <h2 className={styles.title}>Manage Menu</h2>
 
-      {/* 1. Restaurant Selector Dropdown */}
-      <div className="mb-6">
-        <label htmlFor="restaurant-select" className="block text-lg font-medium mb-2">
+      <div className={styles.selectorGroup}>
+        <label htmlFor="restaurant-select" className={styles.selectorLabel}>
           Select Restaurant
         </label>
         <select
           id="restaurant-select"
           value={selectedRestaurantId}
           onChange={(e) => setSelectedRestaurantId(e.target.value)}
-          className="w-full max-w-md p-3 border border-gray-300 rounded-lg"
+          className={styles.selectDropdown}
         >
           {restaurants.length === 0 ? (
             <option>Loading restaurants...</option>
@@ -118,87 +116,84 @@ const ManageMenu = () => {
       </div>
 
       {selectedRestaurantId && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className={styles.grid}>
           
-          {/* 2. "Add New Item" Form */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xl font-semibold mb-3">Add New Item</h3>
-            <form onSubmit={handleSubmit} className="bg-white p-4 rounded-lg shadow-md space-y-4">
-              <div>
-                <label className="block mb-1 font-medium">Item Name</label>
+          <div className={styles.formContainer}>
+            <h3 className={styles.formTitle}>Add New Item</h3>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.formGroup}>
+                <label className={styles.inputLabel}>Item Name</label>
                 <input
                   type="text"
                   name="itemName"
                   value={newItem.itemName}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded-lg"
+                  className={styles.inputField}
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium">Price ($)</label>
+              <div className={styles.formGroup}>
+                <label className={styles.inputLabel}>Price ($)</label>
                 <input
                   type="number"
                   name="price"
                   value={newItem.price}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded-lg"
+                  className={styles.inputField}
                   step="0.01"
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium">Category</label>
+              <div className={styles.formGroup}>
+                <label className={styles.inputLabel}>Category</label>
                 <input
                   type="text"
                   name="category"
                   value={newItem.category}
                   onChange={handleInputChange}
-                  placeholder="e.g., Appetizer, Main, Dessert"
-                  className="w-full p-2 border rounded-lg"
+                  placeholder="e.g., Appetizer, Main"
+                  className={styles.inputField}
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium">Image URL</label>
+              <div className={styles.formGroup}>
+                <label className={styles.inputLabel}>Image URL</label>
                 <input
                   type="text"
                   name="image"
                   value={newItem.image}
                   onChange={handleInputChange}
-                  className="w-full p-2 border rounded-lg"
+                  className={styles.inputField}
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                className="btn btn-secondary" /* Use global green button */
               >
                 Add Item
               </button>
             </form>
           </div>
 
-          {/* 3. "Existing Menu Items" List */}
-          <div className="lg:col-span-2">
-            <h3 className="text-xl font-semibold mb-3">Existing Menu Items</h3>
+          <div className={styles.listContainer}>
+            <h3 className={styles.listTitle}>Existing Menu Items</h3>
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <div className="space-y-3">
+              <div className={styles.menuList}>
                 {menuItems.length > 0 ? (
                   menuItems.map((item) => (
-                    <div key={item._id} className="flex items-center bg-white p-3 rounded-lg shadow-sm">
+                    <div key={item._id} className={styles.menuItem}>
                       <img 
                         src={item.image} 
                         alt={item.itemName}
-                        className="w-16 h-16 object-cover rounded-md mr-4"
+                        className={styles.menuItemImage}
                         onError={(e) => { e.target.src = 'https://via.placeholder.com/100?text=Food'; }}
                       />
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-lg">{item.itemName}</h4>
-                        <p className="text-sm text-gray-600">{item.category}</p>
+                      <div className={styles.menuItemContent}>
+                        <h4 className={styles.menuItemName}>{item.itemName}</h4>
+                        <p className={styles.menuItemCategory}>{item.category}</p>
                       </div>
-                      <div className="text-lg font-bold">
+                      <div className={styles.menuItemPrice}>
                         ${item.price.toFixed(2)}
                       </div>
-                      {/* Add Edit/Delete buttons here later */}
                     </div>
                   ))
                 ) : (

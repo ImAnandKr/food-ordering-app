@@ -1,0 +1,74 @@
+/* frontend/src/pages/LoginPage.module.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns to top */
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 450px; /* Standard form width */
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between form elements */
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between label and input */
+}
+
+.inputLabel {
+  font-weight: 500;
+  color: #374151; /* gray-700 */
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 8px;
+  box-sizing: border-box; /* Important for padding to work nicely */
+  font-size: 1rem;
+}
+
+.inputField:focus {
+  outline: 2px solid #ef4444;
+  border-color: #ef4444;
+}
+
+/* We use the global .btn and .btn-primary from index.css */
+
+.linkText {
+  font-size: 0.875rem; /* 14px */
+  text-align: center;
+  color: #4b5563; /* gray-600 */
+}
+
+.link {
+  font-weight: 500;
+  color: #ef4444;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

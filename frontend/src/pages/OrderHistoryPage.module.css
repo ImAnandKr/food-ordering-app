@@ -1,0 +1,155 @@
+/* frontend/src/pages/OrderHistoryPage.module.css */
+
+.title {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444; /* red-600 */
+  margin-top: 2.5rem;
+}
+
+.emptyOrders {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.emptyMessage {
+  font-size: 1.25rem; /* 20px */
+  color: #4b5563; /* gray-600 */
+}
+
+.ordersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.orderCard {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden; /* To keep rounded corners */
+}
+
+.cardHeader {
+  padding: 1rem;
+  background-color: #f9fafb; /* gray-50 */
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Wrap on small screens */
+  gap: 1rem;
+}
+
+.headerInfo h2 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  margin: 0;
+}
+
+.headerInfo span {
+  font-weight: 400;
+  color: #374151; /* gray-700 */
+}
+
+.headerInfo p {
+  font-size: 0.875rem; /* 14px */
+  color: #4b5563; /* gray-600 */
+  margin: 0;
+  margin-top: 0.25rem;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; /* Pill shape */
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Dynamic status colors */
+.statusPending {
+  background-color: #fef3c7; /* yellow-100 */
+  color: #92400e; /* yellow-800 */
+}
+.statusConfirmed {
+  background-color: #dbeafe; /* blue-100 */
+  color: #1e40af; /* blue-800 */
+}
+.statusPreparing {
+  background-color: #dbeafe; /* blue-100 */
+  color: #1e40af; /* blue-800 */
+}
+.statusOutForDelivery {
+  background-color: #fde68a; /* amber-200 */
+  color: #92400e; /* amber-800 */
+}
+.statusDelivered {
+  background-color: #d1fae5; /* green-100 */
+  color: #065f46; /* green-800 */
+}
+.statusCancelled {
+  background-color: #fee2e2; /* red-100 */
+  color: #991b1b; /* red-800 */
+}
+
+
+.cardBody {
+  padding: 1rem;
+}
+
+.restaurantName {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  divide-y: 1px solid #e5e7eb; /* gray-200 */
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+}
+
+.itemName {
+  font-weight: 500;
+}
+
+.itemQuantity {
+  color: #4b5563; /* gray-600 */
+}
+
+.itemPrice {
+  color: #1f2937; /* gray-800 */
+}
+
+.cardFooter {
+  padding: 1rem;
+  background-color: #f9fafb; /* gray-50 */
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paymentMode {
+  color: #4b5563; /* gray-600 */
+}
+
+.totalAmount {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700;
+}

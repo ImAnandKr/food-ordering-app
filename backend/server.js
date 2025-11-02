@@ -14,8 +14,18 @@ const app = express();
 // Body parser
 app.use(express.json());
 
-// Enable CORS
-app.use(cors());
+// === THIS IS THE FIX ===
+// Setup CORS to allow your frontend
+const corsOptions = {
+  origin: [
+    'http://localhost:5173', // Your local dev environment
+    'http://localhost:4173'  // Your local preview environment
+    // Add your Vercel URL here later (e.g., 'https://your-frontend.vercel.app')
+  ],
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+// =========================
 
 // --- API Routes ---
 app.use('/api/users', require('./routes/userRoutes'));

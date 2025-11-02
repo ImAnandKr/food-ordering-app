@@ -1,0 +1,56 @@
+/* frontend/src/components/Header.module.css */
+
+.header {
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.nav {
+  /* This uses the global .container class's width/padding */
+  /* but we redefine it here to use flex */
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  color: #ef4444; /* red-600 */
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.navLink {
+  color: #374151; /* gray-700 */
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: #ef4444; /* red-600 */
+}
+
+/* We'll use the global .btn and .btn-primary for the login button */
+/* But we also need a simple button style for 'Logout' */
+.logoutButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #374151; /* gray-700 */
+  padding: 0;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.logoutButton:hover {
+  color: #ef4444; /* red-600 */
+}

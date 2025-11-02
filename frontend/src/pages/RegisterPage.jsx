@@ -1,7 +1,12 @@
+// frontend/src/pages/RegisterPage.jsx
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+
+// 1. Import the CSS module
+import styles from './RegisterPage.module.css';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -11,7 +16,6 @@ const RegisterPage = () => {
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
-  // If user is already logged in, redirect to home
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if (userInfo) {
@@ -32,7 +36,6 @@ const RegisterPage = () => {
         password,
         address,
       });
-      // Save user info and auto-login
       localStorage.setItem('userInfo', JSON.stringify(data));
       toast.success('Registration successful!');
       
@@ -46,33 +49,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-10">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-center text-gray-900">
+    // 2. Use the imported styles
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.title}>
           Create Account
         </h1>
-        <form className="space-y-4" onSubmit={submitHandler}>
-          <div>
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+        <form className={styles.form} onSubmit={submitHandler}>
+          
+          {/* --- NAME INPUT (FIXED) --- */}
+          <div className={styles.formGroup}>
+            <label htmlFor="name" className={styles.inputLabel}>
               Name
-            </label>
+            </label>            
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               required
             />
           </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+
+          {/* --- EMAIL INPUT (FIXED) --- */}
+          <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.inputLabel}>
               Email address
             </label>
             <input
@@ -80,15 +82,14 @@ const RegisterPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               required
             />
           </div>
-          <div>
-            <label
-              htmlFor="address"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+
+          {/* --- ADDRESS INPUT --- */}
+          <div className={styles.formGroup}>
+            <label htmlFor="address" className={styles.inputLabel}>
               Address
             </label>
             <input
@@ -96,15 +97,14 @@ const RegisterPage = () => {
               id="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               required
             />
           </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+
+          {/* --- PASSWORD INPUT --- */}
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.inputLabel}>
               Password
             </label>
             <input
@@ -112,15 +112,14 @@ const RegisterPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               required
             />
           </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+
+          {/* --- CONFIRM PASSWORD INPUT --- */}
+          <div className={styles.formGroup}>
+            <label htmlFor="confirmPassword" className={styles.inputLabel}>
               Confirm Password
             </label>
             <input
@@ -128,22 +127,24 @@ const RegisterPage = () => {
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               required
             />
           </div>
+
           <button
             type="submit"
-            className="w-full px-4 py-3 font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300"
+            className="btn btn-primary" /* Use global button style */
+            style={{ marginTop: '0.5rem' }} /* Add a little space */
           >
             Register
           </button>
         </form>
-        <p className="text-sm text-center text-gray-600">
+        <p className={styles.linkText} style={{ marginTop: '1.5rem' }}>
           Already have an account?{' '}
           <Link
             to="/login"
-            className="font-medium text-red-600 hover:underline"
+            className={styles.link}
           >
             Login here
           </Link>

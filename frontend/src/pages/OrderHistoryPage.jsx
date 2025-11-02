@@ -1,8 +1,13 @@
+// frontend/src/pages/OrderHistoryPage.jsx
+
 import { useState, useEffect } from 'react';
 import api from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { useNavigate } from 'react-router-dom'; // <-- This line is now fixed
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
+// 1. Import the CSS module
+import styles from './OrderHistoryPage.module.css';
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
@@ -11,7 +16,6 @@ const OrderHistoryPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if (!userInfo) {
       toast.error('You must be logged in to view your orders.');
@@ -22,9 +26,7 @@ const OrderHistoryPage = () => {
     const fetchUserOrders = async () => {
       try {
         setLoading(true);
-        // This endpoint gets orders for the user whose token is sent
         const { data } = await api.get('/orders/myorders');
-        // Sort orders from newest to oldest
         setOrders(data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
         setLoading(false);
       } catch (err) {
@@ -42,10 +44,9 @@ const OrderHistoryPage = () => {
   }
 
   if (error) {
-    return <div className="text-center text-red-500 mt-10">{error}</div>;
+    return <div className={styles.error}>{error}</div>;
   }
 
-  // Helper to format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -54,61 +55,77 @@ const OrderHistoryPage = () => {
     });
   };
 
+  // Helper to get dynamic status style
+  const getStatusClass = (status) => {
+    const statusKey = status.toLowerCase().replace(/ /g, '');
+    switch (statusKey) {
+      case 'delivered':
+        return styles.statusDelivered;
+      case 'cancelled':
+        return styles.statusCancelled;
+      case 'outfordelivery':
+        return styles.statusOutForDelivery;
+      case 'confirmed':
+        return styles.statusConfirmed;
+      case 'preparing':
+        return styles.statusPreparing;
+      case 'pending':
+      default:
+        return styles.statusPending;
+    }
+  };
+
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-6">My Orders</h1>
+    // 2. Use global 'container' class
+    <div className="container" style={{ paddingTop: '20px' }}>
+      <h1 className={styles.title}>My Orders</h1>
 
       {orders.length === 0 ? (
-        <div className="text-center p-6 bg-white rounded-lg shadow-md">
-          <p className="text-xl text-gray-600">You haven't placed any orders yet.</p>
+        <div className={styles.emptyOrders}>
+          <p className={styles.emptyMessage}>You haven't placed any orders yet.</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        // 3. Use imported styles
+        <div className={styles.ordersContainer}>
           {orders.map((order) => (
-            <div key={order._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-4 bg-gray-50 border-b flex justify-between items-center">
-                <div>
-                  <h2 className="text-lg font-semibold">
-                    Order ID: <span className="font-normal text-gray-700">{order._id}</span>
+            <div key={order._id} className={styles.orderCard}>
+              <div className={styles.cardHeader}>
+                <div className={styles.headerInfo}>
+                  <h2>
+                    Order ID: <span>{order._id}</span>
                   </h2>
-                  <p className="text-sm text-gray-500">
+                  <p>
                     Placed on: {formatDate(order.orderDate)}
                   </p>
                 </div>
                 <div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                    order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-                    'bg-yellow-100 text-yellow-800'
-                  }`}>
+                  <span className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
                     {order.status}
                   </span>
                 </div>
               </div>
               
-              <div className="p-4">
-                <div className="mb-2">
-                  <span className="font-semibold">Restaurant: </span>
-                  {/* We populated restaurant name in the backend controller */}
+              <div className={styles.cardBody}>
+                <div className={styles.restaurantName}>
                   {order.restaurantId?.name || 'Restaurant not available'}
                 </div>
               
-                <ul className="divide-y divide-gray-200">
+                <ul className={styles.itemList}>
                   {order.items.map((item) => (
-                    <li key={item.menuItemId} className="py-3 flex justify-between">
+                    <li key={item.menuItemId} className={styles.item}>
                       <div>
-                        <span className="font-medium">{item.itemName}</span>
-                        <span className="text-gray-600"> x {item.quantity}</span>
+                        <span className={styles.itemName}>{item.itemName}</span>
+                        <span className={styles.itemQuantity}> x {item.quantity}</span>
                       </div>
-                      <span className="text-gray-800">${(item.price * item.quantity).toFixed(2)}</span>
+                      <span className={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
-                <span className="text-gray-600">Payment: {order.paymentMode}</span>
-                <span className="text-xl font-bold text-gray-900">
+              <div className={styles.cardFooter}>
+                <span className={styles.paymentMode}>Payment: {order.paymentMode}</span>
+                <span className={styles.totalAmount}>
                   Total: ${order.totalAmount.toFixed(2)}
                 </span>
               </div>

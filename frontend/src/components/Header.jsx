@@ -1,56 +1,58 @@
+// frontend/src/components/Header.jsx
+
 import { Link, useNavigate } from 'react-router-dom';
+// 1. Import the CSS module
+import styles from './Header.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
-  
-  // This is a simple way to check auth. A Context is better for complex apps.
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   const logoutHandler = () => {
     localStorage.removeItem('userInfo');
-    // You might also want to clear cart items here
-    // localStorage.removeItem('cartItems');
     navigate('/login');
   };
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-red-600">
+    // 2. Use the imported styles
+    <header className={styles.header}>
+      <nav className={styles.nav}>
+        <Link to="/" className={styles.logo}>
           FoodApp
         </Link>
-        <div className="flex gap-4 items-center">
-          <Link to="/cart" className="text-gray-700 hover:text-red-600">
+        <div className={styles.navLinks}>
+          <Link to="/cart" className={styles.navLink}>
             Cart
           </Link>
           {userInfo ? (
             <>
-              <Link to="/orders" className="text-gray-700 hover:text-red-600">
+              <Link to="/orders" className={styles.navLink}>
                 My Orders
               </Link>
               {userInfo.role === 'admin' && (
-                 <Link to="/admin/dashboard" className="text-blue-700 font-medium hover:text-blue-900">
+                <Link to="/admin/dashboard" className={styles.navLink} style={{ color: '#2563eb' }}>
                   Admin
-                 </Link>
+                </Link>
               )}
               <button
                 onClick={logoutHandler}
-                className="text-gray-700 hover:text-red-600"
+                className={styles.logoutButton}
               >
                 Logout ({userInfo.name.split(' ')[0]})
               </button>
             </>
           ) : (
+            // 3. Use global classes from index.css for the button
             <Link
               to="/login"
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="btn btn-primary"
             >
               Login
             </Link>
           )}
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 

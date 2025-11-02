@@ -1,7 +1,12 @@
+// frontend/src/pages/LoginPage.jsx
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+
+// 1. Import the CSS module
+import styles from './LoginPage.module.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -20,11 +25,10 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const { data } = await api.post('/users/login', { email, password });
-      // Save user info (including token) to local storage
       localStorage.setItem('userInfo', JSON.stringify(data));
       toast.success('Logged in successfully!');
       
-      // We need to reload the page to update the Header component
+      // Reload to update header (a context would be better, but this works)
       navigate('/');
       window.location.reload(); 
 
@@ -34,16 +38,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-10">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-center text-gray-900">
+    // 2. Use the imported styles
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.title}>
           Sign In
         </h1>
-        <form className="space-y-6" onSubmit={submitHandler}>
-          <div>
+        <form className={styles.form} onSubmit={submitHandler}>
+          <div className={styles.formGroup}>
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-700"
+              className={styles.inputLabel}
             >
               Email address
             </label>
@@ -52,15 +57,15 @@ const LoginPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               placeholder="you@example.com"
               required
             />
           </div>
-          <div>
+          <div className={styles.formGroup}>
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-700"
+              className={styles.inputLabel}
             >
               Password
             </label>
@@ -69,23 +74,23 @@ const LoginPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+              className={styles.inputField}
               placeholder="••••••••"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-3 font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300"
+            className="btn btn-primary" /* Use global button style */
           >
             Login
           </button>
         </form>
-        <p className="text-sm text-center text-gray-600">
+        <p className={styles.linkText} style={{ marginTop: '1.5rem' }}>
           New customer?{' '}
           <Link
             to="/register"
-            className="font-medium text-red-600 hover:underline"
+            className={styles.link}
           >
             Register here
           </Link>

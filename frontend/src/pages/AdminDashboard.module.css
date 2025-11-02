@@ -1,0 +1,81 @@
+/* frontend/src/pages/AdminDashboard.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column; /* Stacked on small screens */
+  gap: 1.5rem;
+  padding-top: 20px;
+}
+
+/* On medium screens, switch to side-by-side */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+.sidebar {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 1rem;
+  box-sizing: border-box;
+  height: fit-content; /* Make it only as tall as its content */
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 250px; /* Fixed width on larger screens */
+    flex-shrink: 0; /* Don't shrink */
+  }
+}
+
+.sidebarTitle {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navLink {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #374151; /* gray-700 */
+  font-weight: 500;
+  box-sizing: border-box;
+  transition: background-color 0.2s;
+}
+
+.navLink:hover {
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+.navLinkActive {
+  composes: navLink; /* Inherits all styles from .navLink */
+  background-color: #ef4444; /* red-600 */
+  color: white;
+}
+
+.navLinkActive:hover {
+  background-color: #ef4444; /* red-600 */
+}
+
+.content {
+  flex-grow: 1; /* Takes up remaining space */
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 1.5rem;
+}

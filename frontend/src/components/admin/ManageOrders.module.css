@@ -1,0 +1,68 @@
+/* frontend/src/components/admin/ManageOrders.module.css */
+
+.title {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.error {
+  color: #ef4444; /* red-600 */
+}
+
+/* This container allows the table to scroll horizontally */
+.tableContainer {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  min-width: 800px; /* Force scrolling on small screens */
+  border-collapse: collapse; /* Clean table lines */
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+  text-align: left;
+  white-space: nowrap; /* Don't wrap text */
+}
+
+.table th {
+  background-color: #f9fafb; /* gray-50 */
+  font-weight: 600;
+  color: #4b5563; /* gray-600 */
+  text-transform: uppercase;
+  font-size: 0.75rem; /* 12px */
+}
+
+.table td {
+  font-size: 0.875rem; /* 14px */
+  color: #1f2937; /* gray-800 */
+}
+
+.statusSelect {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 6px;
+  background-color: white;
+  font-size: 0.875rem;
+}
+
+.statusSelect:focus {
+  outline: 2px solid #ef4444;
+  border-color: #ef4444;
+}
+
+.idCell {
+  font-family: 'Courier New', Courier, monospace;
+  color: #4b5563; /* gray-600 */
+}
+
+.totalCell {
+  font-weight: 600;
+}

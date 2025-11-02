@@ -1,53 +1,62 @@
+// frontend/src/pages/AdminDashboard.jsx
+
 import React from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
-// Import all real components
+// 1. Import the CSS module
+import styles from './AdminDashboard.module.css';
+
+// Import Admin components
+// We will convert these next
+import ManageOrders from '../components/admin/ManageOrders';
 import ManageRestaurants from '../components/admin/ManageRestaurants';
 import ManageMenu from '../components/admin/ManageMenu';
-import ManageOrders from '../components/admin/ManageOrders'; // <-- Import final component
 
 const AdminDashboard = () => {
   const location = useLocation();
 
-  const getLinkClass = (path) => {
-    return location.pathname.includes(path)
-      ? 'bg-red-600 text-white'
-      : 'text-gray-700 hover:bg-gray-200';
+  // Helper to check if a link is active
+  const isActive = (path) => {
+    return location.pathname === path;
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-150px)]">
+    // 2. Use the imported styles
+    <div className={`container ${styles.container}`}>
       {/* 1. Admin Navigation Sidebar */}
-      <nav className="md:w-64 bg-white shadow-md p-4 space-y-2 md:mr-6 mb-6 md:mb-0">
-        <h2 className="text-2xl font-bold mb-4 border-b pb-2">Admin Menu</h2>
-        <Link
-          to="/admin/dashboard/orders"
-          className={`block w-full text-left px-4 py-2 rounded-lg ${getLinkClass('orders')}`}
-        >
-          Manage Orders
-        </Link>
-        <Link
-          to="/admin/dashboard/restaurants"
-          className={`block w-full text-left px-4 py-2 rounded-lg ${getLinkClass('restaurants')}`}
-        >
-          Manage Restaurants
-        </Link>
-        <Link
-          to="/admin/dashboard/menu"
-          className={`block w-full text-left px-4 py-2 rounded-lg ${getLinkClass('menu')}`}
-        >
-          Manage Menu
-        </Link>
+      <nav className={styles.sidebar}>
+        <h2 className={styles.sidebarTitle}>Admin Menu</h2>
+        <div className={styles.navList}>
+          <Link
+            to="/admin/dashboard/orders"
+            // 3. Dynamically set active class
+            className={isActive('/admin/dashboard/orders') ? styles.navLinkActive : styles.navLink}
+          >
+            Manage Orders
+          </Link>
+          <Link
+            to="/admin/dashboard/restaurants"
+            className={isActive('/admin/dashboard/restaurants') ? styles.navLinkActive : styles.navLink}
+          >
+            Manage Restaurants
+          </Link>
+          <Link
+            to="/admin/dashboard/menu"
+            className={isActive('/admin/dashboard/menu') ? styles.navLinkActive : styles.navLink}
+          >
+            Manage Menu
+          </Link>
+        </div>
       </nav>
 
       {/* 2. Admin Content Area */}
-      <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
+      <div className={styles.content}>
         <Routes>
           <Route path="orders" element={<ManageOrders />} />
           <Route path="restaurants" element={<ManageRestaurants />} />
           <Route path="menu" element={<ManageMenu />} />
           
-          {/* Default admin page (set to orders) */}
+          {/* Default admin page */}
           <Route index element={<ManageOrders />} /> 
         </Routes>
       </div>
