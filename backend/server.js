@@ -21,8 +21,8 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:4173',
-    'https://food-app-backend-lruy.onrender.com', // Your old one
-    'https://food-ordering-app-three-bay.vercel.app' // <-- ADD YOUR MAIN VERCEL URL
+    'https://food-ordering-app-three-bay.vercel.app', // Old one
+    'https://food-ordering-bd8s6qu0k-imanandkrs-projects.vercel.app' // <-- ADD YOUR NEW URL
   ],
   optionsSuccessStatus: 200
 };
