@@ -16,15 +16,18 @@ app.use(express.json());
 
 // === THIS IS THE FIX ===
 // Setup CORS to allow your frontend
+// ...
 const corsOptions = {
   origin: [
-    'http://localhost:5173', // Your local dev environment
-    'http://localhost:4173'  // Your local preview environment
-    // Add your Vercel URL here later (e.g., 'https://your-frontend.vercel.app')
+    'http://localhost:5173',
+    'http://localhost:4173',
+    'https://food-app-backend-lruy.onrender.com', // Your old one
+    'https://food-ordering-app-three-bay.vercel.app' // <-- ADD YOUR MAIN VERCEL URL
   ],
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+// ...
 // =========================
 
 // --- API Routes ---
