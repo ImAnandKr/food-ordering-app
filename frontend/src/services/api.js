@@ -1,9 +1,13 @@
+
+
 import axios from 'axios';
 
 const API = axios.create({
-  // Use the new environment variable
+  // Change this line back to the production variable
   baseURL: import.meta.env.VITE_API_URL, 
 });
+
+// ... (rest of the file is the same)
 
 // ... (the rest of the file stays the same)
 // Add a request interceptor to include the token in headers
